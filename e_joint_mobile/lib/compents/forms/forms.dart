@@ -1,4 +1,4 @@
-import 'package:energy_joint/compents/forms/inputs.dart';
+import 'package:e_joint_mobile/compents/forms/inputs.dart';
 import 'package:flutter/material.dart';
 
 class SignUpForm extends StatelessWidget {

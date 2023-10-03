@@ -1,6 +1,6 @@
-import 'package:energy_joint/compents/buttons/buttons.dart';
-import 'package:energy_joint/compents/forms/forms.dart';
-import 'package:energy_joint/compents/headers/header.dart';
+import 'package:e_joint_mobile/compents/buttons/buttons.dart';
+import 'package:e_joint_mobile/compents/forms/forms.dart';
+import 'package:e_joint_mobile/compents/headers/header.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {

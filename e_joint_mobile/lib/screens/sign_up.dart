@@ -1,6 +1,6 @@
-import 'package:energy_joint/compents/bottoms/bottoms.dart';
-import 'package:energy_joint/compents/forms/forms.dart';
-import 'package:energy_joint/compents/headers/header.dart';
+import 'package:e_joint_mobile/compents/bottoms/bottoms.dart';
+import 'package:e_joint_mobile/compents/forms/forms.dart';
+import 'package:e_joint_mobile/compents/headers/header.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -8,7 +8,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Column(
         children: [
           BigPageHeader(

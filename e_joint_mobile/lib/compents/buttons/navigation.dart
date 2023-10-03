@@ -1,7 +1,7 @@
-import 'package:energy_joint/screens/account.dart';
-import 'package:energy_joint/screens/dish_list.dart';
-import 'package:energy_joint/screens/home.dart';
-import 'package:energy_joint/screens/menu.dart';
+import 'package:e_joint_mobile/screens/account.dart';
+import 'package:e_joint_mobile/screens/dish_list.dart';
+import 'package:e_joint_mobile/screens/home.dart';
+import 'package:e_joint_mobile/screens/menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 

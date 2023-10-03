@@ -1,4 +1,4 @@
-import 'package:energy_joint/compents/buttons/buttons.dart';
+import 'package:e_joint_mobile/compents/buttons/buttons.dart';
 import 'package:flutter/material.dart';
 
 class BottomStack extends StatelessWidget {

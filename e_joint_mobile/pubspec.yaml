@@ -35,6 +35,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  flutter_slidable: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -58,11 +59,29 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
+  assets:
+    - assets/images/signup/sign_up_image.png
+    - assets/images/signup/bottom_image_clear.png
+    - assets/images/signup/header_image.png
+    - assets/images/signup/header_small_image.png
+    - assets/images/signup/bottom_image_color.png
+    - assets/images/products/product_image.png
+    - assets/images/products/chikcedstew.png
+    - assets/images/products/dishlist_image.png
+    - assets/images/menu/startes.jpg
+    - assets/images/menu/main_courses.jpg
+    - assets/images/menu/beverages.jpg
+    - assets/images/menu/deserts.jpg
+    - assets/images/menu/kids_menu.jpg
+    - assets/images/menu/salads.jpg
+    - assets/images/menu/sides.jpg
+    - assets/images/menu/spacials.jpg
+    - assets/images/brands/mtn_logo.png
+    - assets/images/brands/airtel-logo.jpeg
+    - assets/images/brands/mastercard_logo.jpeg
+    - assets/images/brands/visa_logo.jpeg
+    - assets/images/brands/rwandan_francs.jpeg
+    - assets/images/brands/us_dollar.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

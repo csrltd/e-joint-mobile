@@ -1,6 +1,6 @@
-import 'package:energy_joint/compents/buttons/navigation.dart';
-import 'package:energy_joint/compents/headers/header.dart';
-import 'package:energy_joint/screens/single_product.dart';
+import 'package:e_joint_mobile/compents/buttons/navigation.dart';
+import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/screens/single_product.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

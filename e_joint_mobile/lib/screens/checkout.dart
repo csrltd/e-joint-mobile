@@ -1,3 +1,4 @@
+import 'package:e_joint_mobile/compents/brands/brands.dart';
 import 'package:e_joint_mobile/compents/buttons/buttons.dart';
 import 'package:e_joint_mobile/compents/forms/inputs.dart';
 import 'package:e_joint_mobile/compents/headers/header.dart';
@@ -50,7 +51,25 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         });
                       },
                     ),
-                    const Text('Mobile Money'),
+                    const Row(
+                      children: [
+                        Text('Mobile Money'),
+                        SizedBox(width: 32),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            BrandCard(
+                                brandImage:
+                                    'assets/images/brands/mtn_logo.png'),
+                            SizedBox(width: 12),
+                            BrandCard(
+                              brandImage:
+                                  'assets/images/brands/airtel-logo.jpeg',
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ],
                 ),
                 Row(
@@ -64,7 +83,25 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         });
                       },
                     ),
-                    const Text('Card Payment'),
+                    const Row(
+                      children: [
+                        Text('Card Payment'),
+                        SizedBox(width: 32),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            BrandCard(
+                                brandImage:
+                                    'assets/images/brands/visa_logo.jpeg'),
+                            SizedBox(width: 12),
+                            BrandCard(
+                              brandImage:
+                                  'assets/images/brands/mastercard_logo.jpeg',
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ],
                 ),
                 Row(
@@ -78,7 +115,24 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         });
                       },
                     ),
-                    const Text('Cash on pick up'),
+                    const Row(
+                      children: [
+                        Text('Cash on pick up'),
+                        SizedBox(width: 32),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            BrandCard(
+                                brandImage:
+                                    'assets/images/brands/rwandan_francs.jpeg'),
+                            SizedBox(width: 12),
+                            BrandCard(
+                              brandImage: 'assets/images/brands/us_dollar.jpeg',
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ],
                 ),
                 if (selectedValue == 1) ..._buildMobileMoneyForm(),
@@ -168,19 +222,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            InputField(labelText: 'Card Number', passowrd_filed: false),
-            SizedBox(height: 24),
+            const InputField(labelText: 'Card Number', passowrd_filed: false),
+            const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   width: 90,
-                  child: InputField(
+                  child: const InputField(
                       labelText: 'Expiry Date', passowrd_filed: false),
                 ),
                 Container(
                     width: 200,
-                    child: InputField(labelText: 'CVV', passowrd_filed: false)),
+                    child: const InputField(
+                        labelText: 'CVV', passowrd_filed: false)),
               ],
             )
           ],

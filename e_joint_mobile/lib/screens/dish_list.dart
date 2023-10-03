@@ -1,8 +1,8 @@
-import 'package:energy_joint/compents/headers/header.dart';
-import 'package:energy_joint/screens/checkout.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:energy_joint/styling/colors.dart';
+import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/screens/checkout.dart';
+import 'package:e_joint_mobile/styling/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class DishListPage extends StatefulWidget {
   const DishListPage({super.key});
