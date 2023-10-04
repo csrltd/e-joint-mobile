@@ -1,19 +1,23 @@
 import 'package:e_joint_mobile/compents/buttons/buttons.dart';
 import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/models/cart.dart';
+import 'package:e_joint_mobile/models/menu_items.dart';
 import 'package:e_joint_mobile/screens/dish_list.dart';
+import 'package:e_joint_mobile/services/cart.dart';
 import 'package:flutter/material.dart';
 
 class SingleProductPage extends StatelessWidget {
-  const SingleProductPage({super.key});
-
+  SingleProductPage({super.key, required this.menuItem});
+  final MenuItem menuItem;
+  final cartService = CartService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SmallPageHeader(
-              headerText: 'ChikenStew',
+          SmallPageHeader(
+              headerText: menuItem.name,
               headerImagePath: 'assets/images/signup/header_image.png',
               headerSmallImagePath:
                   'assets/images/signup/header_small_image.png'),
@@ -32,9 +36,9 @@ class SingleProductPage extends StatelessWidget {
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          image: const DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/products/chikcedstew.png'),
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  'http://127.0.0.1:8000${menuItem.image}'),
                               fit: BoxFit.cover),
                         ),
                       ),
@@ -51,25 +55,25 @@ class SingleProductPage extends StatelessWidget {
                                   Colors.black.withOpacity(0.7)
                                 ])),
                       ),
-                      const Positioned(
+                      Positioned(
                         bottom: 32,
                         left: 0,
                         right: 0,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 24.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Chicken Stew',
-                                style: TextStyle(
+                                menuItem.name,
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 32,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                '2500Rwf',
-                                style: TextStyle(
+                                menuItem.price,
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 22),
                               )
                             ],
@@ -156,11 +160,26 @@ class SingleProductPage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: PrimaryButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) {
-                        return const DishListPage();
-                      }));
+                    onPressed: () async {
+                      bool success = await cartService.addToCart(CartItem(
+                        id: menuItem.id.toString(),
+                        name: menuItem.name,
+                        price: double.parse(menuItem.price),
+                        quantity: 1,
+                      ));
+                      if (success) {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return DishListPage();
+                        }));
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text(
+                              "Failed to add item to cart. Please try again."),
+                          duration: Duration(seconds: 2),
+                        ));
+                      }
                     },
                     labelText: 'Add this to order',
                   ),

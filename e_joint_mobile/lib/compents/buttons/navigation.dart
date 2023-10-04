@@ -43,7 +43,7 @@ class _BottomNavState extends State<BottomNav> {
           CustomNavIcon(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return const DishListPage();
+                return DishListPage();
               }));
             },
             iconData: Icons.restaurant_menu_rounded,
