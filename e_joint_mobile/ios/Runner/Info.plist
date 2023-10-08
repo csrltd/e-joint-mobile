@@ -45,5 +45,8 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSKeychainUsageDescription</key>
+	<string>We use the keychain to securely store sensitive user data.</string>
+
 </dict>
 </plist>

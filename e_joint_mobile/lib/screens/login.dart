@@ -1,6 +1,8 @@
 import 'package:e_joint_mobile/compents/buttons/buttons.dart';
-import 'package:e_joint_mobile/compents/forms/forms.dart';
+import 'package:e_joint_mobile/compents/forms/inputs.dart';
 import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/screens/home.dart';
+import 'package:e_joint_mobile/services/login.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var _usernameController = TextEditingController();
+  var _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,16 +31,32 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                  child: LoginForm(),
+                  child: Column(
+                    children: [
+                      InputField(
+                        labelText: 'Phone number',
+                        passowrd_filed: false,
+                        inputController: _usernameController,
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      InputField(
+                        labelText: 'Enter you PIN',
+                        passowrd_filed: true,
+                        inputController: _passwordController,
+                      )
+                    ],
+                  ),
                 ),
                 Stack(
                   children: <Widget>[
                     Container(
-                      height: 250,
+                      height: 150,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(
-                                'assets/images/signup/bottom_image_clear.png'),
+                                'assets/images/signup/bottom_image_color.png'),
                             fit: BoxFit.fill),
                       ),
                     ),
@@ -44,18 +64,42 @@ class _LoginPageState extends State<LoginPage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: PrimaryButton(
-                          onPressed: () {},
-                          labelText: 'Login',
+                          onPressed: () {
+                            _login();
+                          },
+                          labelText: 'Sign up',
                         ),
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           )
         ],
       ),
     );
+  }
+
+  void _login() async {
+    final String username = _usernameController.text;
+    final password = _passwordController.text;
+
+    LoginService loginService = LoginService();
+
+    String? access = await loginService.login(
+      username,
+      password,
+    );
+    if (access != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return const HomePage();
+          },
+        ),
+      );
+    }
   }
 }

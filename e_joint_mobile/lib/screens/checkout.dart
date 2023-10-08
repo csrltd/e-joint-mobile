@@ -13,7 +13,15 @@ class CheckoutPage extends StatefulWidget {
 
 class _CheckoutPageState extends State<CheckoutPage> {
   int? selectedValue;
+  //mobile payment
+  final _phoneNumberController = TextEditingController();
+  final _codeController = TextEditingController();
 
+  //card Paymment
+
+  final _cardNumberController = TextEditingController();
+  final _expiryDateNumberController = TextEditingController();
+  final _csvNumberController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,15 +199,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
           children: [
             Container(
               width: 100,
-              child: const InputField(
+              child: InputField(
                 labelText: 'Code',
                 passowrd_filed: false,
+                inputController: _codeController,
               ),
             ),
             Container(
                 width: 200,
-                child: const InputField(
-                    labelText: 'Phone number', passowrd_filed: false)),
+                child: InputField(
+                  labelText: 'Phone number',
+                  passowrd_filed: false,
+                  inputController: _phoneNumberController,
+                )),
           ],
         ),
       )
@@ -222,20 +234,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const InputField(labelText: 'Card Number', passowrd_filed: false),
+            InputField(
+              labelText: 'Card Number',
+              passowrd_filed: false,
+              inputController: _cardNumberController,
+            ),
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   width: 90,
-                  child: const InputField(
-                      labelText: 'Expiry Date', passowrd_filed: false),
+                  child: InputField(
+                    labelText: 'Expiry Date',
+                    passowrd_filed: false,
+                    inputController: _expiryDateNumberController,
+                  ),
                 ),
                 Container(
                     width: 200,
-                    child: const InputField(
-                        labelText: 'CVV', passowrd_filed: false)),
+                    child: InputField(
+                      labelText: 'CSV',
+                      passowrd_filed: false,
+                      inputController: _csvNumberController,
+                    )),
               ],
             )
           ],

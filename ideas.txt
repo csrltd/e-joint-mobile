@@ -1,0 +1,19 @@
+Create order
+
+1. Post and order
+    Id:
+    User:
+    Total
+    Date Created:
+
+If it's a success
+2. Return OrderId
+3. Get Cart Items
+4. Create Order Items
+4. Loop through the Cart Items
+6. Add every item to the Order Items 
+        OrderId:
+        Id:
+        ProductName
+        Quantity
+        
