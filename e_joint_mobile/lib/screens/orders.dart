@@ -1,5 +1,6 @@
 import 'package:e_joint_mobile/components/buttons/navigation.dart';
 import 'package:e_joint_mobile/components/headers/header.dart';
+import 'package:e_joint_mobile/models/ap_messages.dart';
 import 'package:e_joint_mobile/models/data.dart';
 import 'package:e_joint_mobile/models/orders.dart';
 import 'package:e_joint_mobile/screens/order_items.dart';
@@ -34,17 +35,20 @@ class _OrdersScreenState extends State<OrdersScreen> {
               Container(
                 height: 500,
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: FutureBuilder(
+                child: FutureBuilder<Result>(
                     future: fetchOrders(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text('Error${snapshot.error}');
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Text('No orders found');
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasData &&
+                          snapshot.data!.error != null) {
+                        return errorWidget(
+                            snapshot.data!.error!); // Using our errorWidget
+                      } else if (!snapshot.hasData ||
+                          (snapshot.data!.data?.isEmpty ?? true)) {
+                        return Text("No menu items found");
                       } else {
-                        List<Order> orders = snapshot.data!;
+                        List<Order> orders = snapshot.data!.data!;
 
                         return ListView.builder(
                             itemCount: orders.length,

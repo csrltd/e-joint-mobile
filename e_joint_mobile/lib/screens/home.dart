@@ -1,8 +1,6 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:e_joint_mobile/components/buttons/navigation.dart';
-import 'package:e_joint_mobile/components/headers/header.dart';
+import 'package:e_joint_mobile/compents/buttons/navigation.dart';
+import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/models/ap_messages.dart';
 import 'package:e_joint_mobile/models/data.dart';
 import 'package:e_joint_mobile/models/menu_items.dart';
 import 'package:e_joint_mobile/screens/single_product.dart';
@@ -34,30 +32,20 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   height: 500,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: FutureBuilder<List<MenuItem>>(
+                  child: FutureBuilder<Result<List<MenuItem>>>(
                     future: fetchMenuItems(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        String errorMessage;
-                        if (snapshot.error is SocketException) {
-                          errorMessage =
-                              'Connection error. Please check your internet connection.';
-                        } else if (snapshot.error is TimeoutException) {
-                          errorMessage =
-                              'Connection timeout. Please try again.';
-                        } else {
-                          errorMessage = 'An unexpected error occurred.';
-                          // In debug mode, you can use the line below for more clarity
-                          // errorMessage = 'Error: ${snapshot.error}';
-                        }
-                        return Text(errorMessage);
-                        // return Text('Error: ${snapshot.error}');
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      } else if (snapshot.hasData &&
+                          snapshot.data!.error != null) {
+                        return errorWidget(
+                            snapshot.data!.error!); // Using our errorWidget
+                      } else if (!snapshot.hasData ||
+                          (snapshot.data!.data?.isEmpty ?? true)) {
                         return Text("No menu items found");
                       } else {
-                        List<MenuItem> menuItems = snapshot.data!;
+                        List<MenuItem> menuItems = snapshot.data!.data!;
 
                         return SingleChildScrollView(
                           child: Wrap(
