@@ -1,7 +1,7 @@
-import 'package:e_joint_mobile/compents/brands/brands.dart';
-import 'package:e_joint_mobile/compents/buttons/buttons.dart';
-import 'package:e_joint_mobile/compents/forms/inputs.dart';
-import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/components/brands/brands.dart';
+import 'package:e_joint_mobile/components/buttons/buttons.dart';
+import 'package:e_joint_mobile/components/forms/inputs.dart';
+import 'package:e_joint_mobile/components/headers/header.dart';
 import 'package:e_joint_mobile/screens/confirm.dart';
 import 'package:e_joint_mobile/styling/colors.dart';
 import 'package:flutter/material.dart';

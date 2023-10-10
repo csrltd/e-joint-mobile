@@ -1,4 +1,4 @@
-import 'package:e_joint_mobile/compents/forms/inputs.dart';
+import 'package:e_joint_mobile/components/forms/inputs.dart';
 import 'package:e_joint_mobile/services/sign_up.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
-import 'package:e_joint_mobile/compents/buttons/buttons.dart';
-import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/components/buttons/buttons.dart';
+import 'package:e_joint_mobile/components/headers/header.dart';
 import 'package:e_joint_mobile/models/cart.dart';
 import 'package:e_joint_mobile/models/menu_items.dart';
 import 'package:e_joint_mobile/screens/dish_list.dart';

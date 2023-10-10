@@ -8,22 +8,18 @@ class AuthService extends ChangeNotifier {
 
   final storage = FlutterSecureStorage();
 
-  Future<void> login(String token) async {
-    await storage.write(key: 'jwt_token', value: token);
-    print('Saved the token');
-    print(token);
+  Future<void> loginService() async {
     _isAuthenticated = true;
-    print(_isAuthenticated);
     notifyListeners();
   }
 
-  Future<void> logout() async {
-    await storage.delete(key: 'jwt_token');
+  Future<void> logoutService() async {
+    await storage.delete(key: 'access_token');
     notifyListeners();
   }
 
-  Future<void> checkAuthenticationStatus() async {
-    String? token = await storage.read(key: 'jwt_token');
+  Future<void> checkAuthenticationStatusService() async {
+    String? token = await storage.read(key: 'access_token');
     _isAuthenticated = token != null;
     print('Read token is$_isAuthenticated');
     notifyListeners();

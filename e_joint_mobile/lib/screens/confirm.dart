@@ -1,5 +1,5 @@
-import 'package:e_joint_mobile/compents/buttons/navigation.dart';
-import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/components/buttons/navigation.dart';
+import 'package:e_joint_mobile/components/headers/header.dart';
 import 'package:e_joint_mobile/styling/colors.dart';
 import 'package:flutter/material.dart';
 

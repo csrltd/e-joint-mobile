@@ -1,8 +1,10 @@
-import 'package:e_joint_mobile/compents/buttons/buttons.dart';
-import 'package:e_joint_mobile/compents/forms/inputs.dart';
-import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/components/buttons/buttons.dart';
+import 'package:e_joint_mobile/components/forms/inputs.dart';
+import 'package:e_joint_mobile/components/headers/header.dart';
 import 'package:e_joint_mobile/screens/home.dart';
+import 'package:e_joint_mobile/screens/sign_up.dart';
 import 'package:e_joint_mobile/services/login.dart';
+import 'package:e_joint_mobile/styling/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,6 +30,41 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  margin: const EdgeInsets.all(24),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Wrap(
+                    children: [
+                      RichText(
+                        text: TextSpan(children: [
+                          const TextSpan(
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.black),
+                              text:
+                                  "If you don't have an account with us, it's okay, "),
+                          WidgetSpan(
+                              child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen()));
+                            },
+                            child: const Text(
+                              'Sign up here',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  decoration: TextDecoration.underline,
+                                  color: primaryColor),
+                            ),
+                          ))
+                        ]),
+                      ),
+                    ],
+                  ),
+                ),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 24),

@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-Future<int?> createOrder(int userId, int restaurantId, double cartTotal) async {
+Future<String?> createOrder(
+    int userId, int restaurantId, double cartTotal) async {
   final response = await http.post(
     Uri.parse('http://127.0.0.1:8000/api/orders/'),
     headers: {
@@ -26,7 +27,7 @@ Future<int?> createOrder(int userId, int restaurantId, double cartTotal) async {
 
 //Add to cart function
 Future<bool> addToCartItemOrder(
-    int order_id, int menuItemId, int quantity) async {
+    String order_id, int menuItemId, int quantity) async {
   final response = await http.post(
     Uri.parse('http://127.0.0.1:8000/api/order-item/'),
     headers: {'Content-Type': 'application/json'},

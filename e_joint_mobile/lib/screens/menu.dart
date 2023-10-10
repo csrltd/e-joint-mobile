@@ -1,4 +1,4 @@
-import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/components/headers/header.dart';
 import 'package:e_joint_mobile/styling/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

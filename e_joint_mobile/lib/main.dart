@@ -1,11 +1,7 @@
-import 'package:e_joint_mobile/compents/forms/forms.dart';
 import 'package:e_joint_mobile/screens/home.dart';
-import 'package:e_joint_mobile/screens/login.dart';
-import 'package:e_joint_mobile/screens/sign_up.dart';
 import 'package:e_joint_mobile/services/auth/models/auth_model.dart';
 import 'package:e_joint_mobile/styling/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());

@@ -1,6 +1,6 @@
-import 'package:e_joint_mobile/compents/buttons/buttons.dart';
-import 'package:e_joint_mobile/compents/forms/forms.dart';
-import 'package:e_joint_mobile/compents/headers/header.dart';
+import 'package:e_joint_mobile/components/buttons/buttons.dart';
+import 'package:e_joint_mobile/components/forms/forms.dart';
+import 'package:e_joint_mobile/components/headers/header.dart';
 import 'package:flutter/material.dart';
 
 class PinResetPage extends StatefulWidget {
