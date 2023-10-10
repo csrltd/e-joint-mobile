@@ -26,6 +26,7 @@ class LoginService {
         final responseBody = jsonDecode(response.body);
         final accessToken = responseBody['access'];
         final refreshToken = responseBody['refresh'];
+
         try {
           await storage.write(key: 'access_token', value: accessToken);
           await storage.write(key: 'refresh_token', value: refreshToken);

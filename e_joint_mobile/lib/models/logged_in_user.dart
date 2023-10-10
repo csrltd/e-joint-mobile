@@ -20,6 +20,7 @@ Future<Map<String, dynamic>?> loggedInUser(
     final userUsername = userData['username'];
     final userFirstName = userData['first_name'];
     final userLastName = userData['last_name'];
+    print(userId);
     try {
       await storage.write(key: 'userId', value: userId);
       await storage.write(key: 'userEmail', value: userEmail);
