@@ -7,10 +7,14 @@ class NotLogedInScreen extends StatelessWidget {
     required this.accessTitle,
     required this.accessText,
     required this.buttonText,
+    required this.icon,
+    required this.iconCOlor,
   });
   final String accessTitle;
   final String accessText;
   final String buttonText;
+  final IconData icon;
+  final Color iconCOlor;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,6 +31,11 @@ class NotLogedInScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Icon(
+            icon,
+            color: iconCOlor,
+            size: 42,
+          ),
           Text(
             accessTitle,
             style: const TextStyle(

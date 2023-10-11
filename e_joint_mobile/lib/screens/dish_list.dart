@@ -3,7 +3,6 @@ import 'package:e_joint_mobile/components/headers/header.dart';
 import 'package:e_joint_mobile/models/ap_messages.dart';
 import 'package:e_joint_mobile/models/cart.dart';
 import 'package:e_joint_mobile/screens/checkout.dart';
-import 'package:e_joint_mobile/screens/menu.dart';
 import 'package:e_joint_mobile/services/auth/models/auth_model.dart';
 import 'package:e_joint_mobile/services/cart.dart';
 import 'package:e_joint_mobile/services/orders.dart';
@@ -24,6 +23,7 @@ class _DishListPageState extends State<DishListPage> {
   late List<CartItem>? cartItems = [];
   double? cartTotal;
   List? ItemsInCart;
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +64,8 @@ class _DishListPageState extends State<DishListPage> {
                   accessTitle: 'Oops, login please',
                   accessText: 'To what you have in cart, you need to login',
                   buttonText: 'Login',
+                  icon: Icons.sentiment_neutral_rounded,
+                  iconCOlor: Colors.yellow,
                 );
                 // WidgetsBinding.instance.addPostFrameCallback(
                 //   (_) {
@@ -239,32 +241,40 @@ class _DishListPageState extends State<DishListPage> {
                                       String? orderId = await createOrder(
                                           userId, 1, cartTotal!);
                                       if (orderId != null) {
-                                        bool allItemsAdded = false;
+                                        bool allItemsAdded;
                                         for (var item in cartItems!) {
                                           bool success =
                                               await addToCartItemOrder(
                                                   orderId,
                                                   int.parse(item.id),
                                                   (item.quantity).toInt());
-
+                                          if (success) {
+                                            allItemsAdded = true;
+                                            print(
+                                                'all times are atted to cart');
+                                          }
                                           if (!success) {
                                             allItemsAdded = false;
                                             break;
                                           }
                                         }
-                                        if (allItemsAdded) {
+                                        if (allItemsAdded = true) {
                                           if (cartItems != null) {
                                             for (var item in cartItems!) {
                                               CartService()
                                                   .removeFromCart(item.id);
-                                              // _fetchCartItems();
+                                              _fetchCartItems();
+                                              print(
+                                                  'all items are deleted from cart');
                                             }
                                           }
 
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) {
-                                                return CheckoutPage();
+                                                return CheckoutPage(
+                                                    cartTotal: cartTotal!,
+                                                    orderId: orderId);
                                               },
                                             ),
                                           );
@@ -275,12 +285,6 @@ class _DishListPageState extends State<DishListPage> {
                                         );
                                       }
                                     }
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) {
-                                      return cartIsEmpty
-                                          ? MenuPage()
-                                          : CheckoutPage();
-                                    }));
                                   },
                                   style: ElevatedButton.styleFrom(
                                       shadowColor: Colors.transparent,

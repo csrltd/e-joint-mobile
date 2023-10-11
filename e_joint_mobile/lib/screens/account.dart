@@ -324,6 +324,8 @@ class _AccountPageState extends State<AccountPage> {
                     accessText:
                         'To view your account information, you need to login with username and password you used creating account',
                     buttonText: 'Click to log in',
+                    icon: Icons.sentiment_neutral_rounded,
+                    iconCOlor: Colors.yellow,
                   );
                 }),
 

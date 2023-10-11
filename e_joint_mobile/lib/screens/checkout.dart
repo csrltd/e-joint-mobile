@@ -3,12 +3,24 @@ import 'package:e_joint_mobile/components/buttons/buttons.dart';
 import 'package:e_joint_mobile/components/forms/inputs.dart';
 import 'package:e_joint_mobile/components/headers/header.dart';
 import 'package:e_joint_mobile/screens/confirm.dart';
+import 'package:e_joint_mobile/services/payment.dart';
 import 'package:e_joint_mobile/styling/colors.dart';
 import 'package:flutter/material.dart';
 
 class CheckoutPage extends StatefulWidget {
+  final double cartTotal;
+  const CheckoutPage(
+      {super.key, required this.cartTotal, required String orderId});
   @override
   _CheckoutPageState createState() => _CheckoutPageState();
+}
+
+Future<Map<String, dynamic>> processPaymentAndFetchReceipt(
+    String phoneNumber, double amountToPay) async {
+  final result = await sendPaymentInfo(phoneNumber, amountToPay);
+  final transactionId = result['transaction_id'];
+  final receipt = result['receipt'];
+  return {'transactionId': transactionId, 'receipt': receipt};
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
@@ -18,12 +30,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final _codeController = TextEditingController();
 
   //card Paymment
-
   final _cardNumberController = TextEditingController();
   final _expiryDateNumberController = TextEditingController();
   final _csvNumberController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    double vat = 18;
+    double vatTax = widget.cartTotal * vat / 100;
+    double grandTotal = widget.cartTotal + vatTax;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,121 +49,175 @@ class _CheckoutPageState extends State<CheckoutPage> {
               headerImagePath: 'assets/images/signup/header_image.png',
               headerSmallImagePath:
                   'assets/images/signup/header_small_image.png'),
-          const SizedBox(height: 50),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              'Payment Method',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Wrap(
-              alignment: WrapAlignment.start,
-              runAlignment: WrapAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: [
-                    Radio(
-                      value: 1,
-                      groupValue: selectedValue,
-                      onChanged: (int? value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      },
-                    ),
-                    const Row(
-                      children: [
-                        Text('Mobile Money'),
-                        SizedBox(width: 32),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            BrandCard(
-                                brandImage:
-                                    'assets/images/brands/mtn_logo.png'),
-                            SizedBox(width: 12),
-                            BrandCard(
-                              brandImage:
-                                  'assets/images/brands/airtel-logo.jpeg',
+          const SizedBox(height: 20),
+          Container(
+            height: 480,
+            child: ListView(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  width: double.infinity,
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  decoration: BoxDecoration(
+                      color: primaryColor.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.only(bottom: 12, left: 24, right: 24),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 1,
+                              color: primaryColor.withOpacity(0.3),
                             ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 2,
-                      groupValue: selectedValue,
-                      onChanged: (int? value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      },
-                    ),
-                    const Row(
-                      children: [
-                        Text('Card Payment'),
-                        SizedBox(width: 32),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          ),
+                        ),
+                        child: const Text(
+                          'Order Summary',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 24, left: 24, right: 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            BrandCard(
-                                brandImage:
-                                    'assets/images/brands/visa_logo.jpeg'),
-                            SizedBox(width: 12),
-                            BrandCard(
-                              brandImage:
-                                  'assets/images/brands/mastercard_logo.jpeg',
-                            ),
+                            Text(
+                                'Your order total is: ${widget.cartTotal.toStringAsFixed(2)}Rw'),
+                            SizedBox(height: 3),
+                            Text('VAT Tax is: $vat%'),
+                            SizedBox(height: 3),
+                            Text('You are paying: ${grandTotal}Rwf')
                           ],
-                        )
-                      ],
-                    ),
-                  ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 3,
-                      groupValue: selectedValue,
-                      onChanged: (int? value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      },
-                    ),
-                    const Row(
-                      children: [
-                        Text('Cash on pick up'),
-                        SizedBox(width: 32),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            BrandCard(
-                                brandImage:
-                                    'assets/images/brands/rwandan_francs.jpeg'),
-                            SizedBox(width: 12),
-                            BrandCard(
-                              brandImage: 'assets/images/brands/us_dollar.jpeg',
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
+                SizedBox(height: 24),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
+                    'Payment Method',
+                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                if (selectedValue == 1) ..._buildMobileMoneyForm(),
-                if (selectedValue == 2) ..._buildCardPaymentForm(),
-                if (selectedValue == 3) ..._buildCashPaymentCard(),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Wrap(
+                    alignment: WrapAlignment.start,
+                    runAlignment: WrapAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Radio(
+                            value: 1,
+                            groupValue: selectedValue,
+                            onChanged: (int? value) {
+                              setState(() {
+                                selectedValue = value;
+                              });
+                            },
+                          ),
+                          const Row(
+                            children: [
+                              Text('Mobile Money'),
+                              SizedBox(width: 32),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  BrandCard(
+                                      brandImage:
+                                          'assets/images/brands/mtn_logo.png'),
+                                  SizedBox(width: 12),
+                                  BrandCard(
+                                    brandImage:
+                                        'assets/images/brands/airtel-logo.jpeg',
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: 2,
+                            groupValue: selectedValue,
+                            onChanged: (int? value) {
+                              setState(() {
+                                selectedValue = value;
+                              });
+                            },
+                          ),
+                          const Row(
+                            children: [
+                              Text('Card Payment'),
+                              SizedBox(width: 32),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  BrandCard(
+                                      brandImage:
+                                          'assets/images/brands/visa_logo.jpeg'),
+                                  SizedBox(width: 12),
+                                  BrandCard(
+                                    brandImage:
+                                        'assets/images/brands/mastercard_logo.jpeg',
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                            value: 3,
+                            groupValue: selectedValue,
+                            onChanged: (int? value) {
+                              setState(() {
+                                selectedValue = value;
+                              });
+                            },
+                          ),
+                          const Row(
+                            children: [
+                              Text('Cash on pick up'),
+                              SizedBox(width: 32),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  BrandCard(
+                                      brandImage:
+                                          'assets/images/brands/rwandan_francs.jpeg'),
+                                  SizedBox(width: 12),
+                                  BrandCard(
+                                    brandImage:
+                                        'assets/images/brands/us_dollar.jpeg',
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                      if (selectedValue == 1) ..._buildMobileMoneyForm(),
+                      if (selectedValue == 2) ..._buildCardPaymentForm(),
+                      if (selectedValue == 3) ..._buildCashPaymentCard(),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
+          SizedBox(height: 20),
           Stack(
             children: <Widget>[
               Container(
@@ -165,6 +234,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: PrimaryButton(
                     onPressed: () {
+                      processPaymentAndFetchReceipt(
+                          _phoneNumberController.text, widget.cartTotal);
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return const ConfirmPage();
