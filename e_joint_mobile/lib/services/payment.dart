@@ -7,7 +7,7 @@ import 'package:e_joint_mobile/constants/constants.dart';
 final FlutterSecureStorage storage = FlutterSecureStorage();
 
 Future<Map<String, dynamic>> sendPaymentInfo(
-    String phoneNumber, double amountToPay) async {
+    String phoneNumber, double amountToPay, String orderId) async {
   try {
     final String token = await storage.read(key: 'access_token') ?? '';
     final paymentUrl = '$baseUrl/checkout/';
@@ -22,6 +22,7 @@ Future<Map<String, dynamic>> sendPaymentInfo(
         {
           'phone_number': phoneNumber,
           'amount_to_pay': amountToPay,
+          'order_id': orderId,
         },
       ),
     );

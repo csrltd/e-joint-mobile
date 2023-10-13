@@ -9,15 +9,16 @@ import 'package:flutter/material.dart';
 
 class CheckoutPage extends StatefulWidget {
   final double cartTotal;
+  final String orderId;
   const CheckoutPage(
-      {super.key, required this.cartTotal, required String orderId});
+      {super.key, required this.cartTotal, required this.orderId});
   @override
   _CheckoutPageState createState() => _CheckoutPageState();
 }
 
 Future<Map<String, dynamic>> processPaymentAndFetchReceipt(
-    String phoneNumber, double amountToPay) async {
-  final result = await sendPaymentInfo(phoneNumber, amountToPay);
+    String phoneNumber, double amountToPay, String orderId) async {
+  final result = await sendPaymentInfo(phoneNumber, amountToPay, orderId);
   final transactionId = result['transaction_id'];
   final receipt = result['receipt'];
   return {'transactionId': transactionId, 'receipt': receipt};
@@ -38,6 +39,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     double vat = 18;
     double vatTax = widget.cartTotal * vat / 100;
     double grandTotal = widget.cartTotal + vatTax;
+    String orderId = widget.orderId;
 
     return Scaffold(
       body: Column(
@@ -235,7 +237,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   child: PrimaryButton(
                     onPressed: () {
                       processPaymentAndFetchReceipt(
-                          _phoneNumberController.text, widget.cartTotal);
+                          _phoneNumberController.text, grandTotal, orderId);
+                      print('the amount to pay is $grandTotal');
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (context) {
                         return const ConfirmPage();

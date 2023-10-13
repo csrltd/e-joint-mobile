@@ -40,23 +40,32 @@ Future<Result<List<MenuItem>>> fetchMenuItems() async {
 
 //userOrders
 Future<Result<List<Order>>> fetchOrders() async {
-  final storage = FlutterSecureStorage();
-  final token = await storage.read(key: 'access_token');
-  final ordersUrl = '$baseUrl/orders/';
-  final response = await http.get(
-    Uri.parse(ordersUrl),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    },
-  );
-  print('TOKEN IS$token');
-  if (response.statusCode == 200) {
-    List responseBody = jsonDecode(response.body);
-    return Result(
-        data: responseBody.map((data) => Order.fromJson(data)).toList());
-  } else {
-    return Result(
-        error: 'Unexpected error occurred with code ${response.statusCode}');
+  try {
+    final storage = FlutterSecureStorage();
+    final token = await storage.read(key: 'access_token');
+    final ordersUrl = '$baseUrl/orders/';
+    final response = await http.get(
+      Uri.parse(ordersUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      List responseBody = jsonDecode(response.body);
+      return Result(
+          data: responseBody.map((data) => Order.fromJson(data)).toList());
+    } else {
+      return Result(
+          error: 'Unexpected error occurred with code ${response.statusCode}');
+    }
+  } catch (error) {
+    if (error is SocketException) {
+      return Result(error: 'Network Error: ${error.message}');
+    } else if (error is TimeoutException) {
+      return Result(error: 'COnnection timeout. Please try again');
+    } else {
+      return Result(error: 'An unexpected error occurrent: $error');
+    }
   }
 }
